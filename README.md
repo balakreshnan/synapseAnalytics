@@ -19,6 +19,9 @@ Select the spark cluster to run the code
 Create code using cells
 Run cells to evecute.
 
+![alt text](https://github.com/balakreshnan/synapseAnalytics/blob/master/images/notebook0.JPG "Notebook Spark Version")
+
+
 I was able to run a linear regression model with taxidata to predict tips.
 
 ## Data Flow
