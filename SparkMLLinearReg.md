@@ -13,7 +13,7 @@ Synapse has the ability to run spark based code which leads to Data engineering 
 - Prepare Data set
 Download the training data set. Training dataset is newyork city taxi data set which is avaialble for public.
 here is my copy available in case:
-https://waginput.blob.core.windows.net/incoming/train.csv
+https://dewsa.blob.core.windows.net/taxidata/train.csv
 
 - Move/copy data into blob storage or ADLS gen2
 
