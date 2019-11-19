@@ -1,4 +1,4 @@
-# Spark based Machine learning in Synapse Analytics
+# Synapse Analytics Using Spark based Machine learning - Linear Regression
 
 Unified Analytics Tool to ingest, compute or process data, Store data, Advanced analytics or machine learning and Display all in one tool. End to end data analytics platform built to scale and ease of use. 
 
