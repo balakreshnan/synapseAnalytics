@@ -9,8 +9,9 @@ Unified Analytics Tool to ingest, compute or process data, Store data, Advanced 
 Synapse has the ability to run spark based code which leads to Data engineering or feature engineering and also Machine learning. This articles describes how to train a machine learning model using spark in synapse.
 
 ## Prerequiste
-Create Azure Machine learning services. Select the region as same as synapse analytics.
-Create a pyspark notebook.
+- Create Azure Machine learning services. Select the region as same as synapse analytics.
+- Create a pyspark notebook.
+- Run each batch statement in separate cell in notebook.
 
 ## Check version to see if library is available.
 ```
@@ -29,6 +30,9 @@ workspace_region = "East US 2"
 ```
 
 ## Load the worspace details and write to config file
+
+Workspace doesn't exist the below code will also create the workspace
+
 ```
 from azureml.core import Workspace
 
@@ -42,6 +46,9 @@ except:
 ```
 
 ## Load the config file
+
+Load the workspace information from the config file. usually the config file is a JSON file.
+
 ```
 import azureml.core
 from azureml.core import Workspace, Datastore
@@ -50,6 +57,10 @@ ws = Workspace.from_config()
 ```
 
 ## setup compute for Azure Automated ML
+
+Build a cpu or gpu cluster. Depending on how much processing is needed create a cpu or gpu cluster. Below code creates
+cpu cluster for the tutorial. Cluster already exist, then use that as well.
+
 ```
 from azureml.core.compute import ComputeTarget, AmlCompute
 from azureml.core.compute_target import ComputeTargetException
@@ -77,11 +88,18 @@ except ComputeTargetException:
 ```
 
 ## Now use data prep library
+
+Python data preparation sdk. Here is the link for details.
+https://docs.microsoft.com/en-us/python/api/azureml-dataprep/?view=azure-ml-py
+
 ```
 import azureml.dataprep as dprep
 ```
 
 ## Load the dataset
+
+Load sample data set for feature engineering using data prep library. This dataset is used for our automated machine learning.
+
 ```
 dataset_root = "https://dprepdata.blob.core.windows.net/demo"
 
@@ -97,6 +115,9 @@ yellow_df.head(5)
 ```
 
 ## Set the coulmns to use
+
+Drop columns if they are null values. Get the columns that can be used for Machine learning model.
+
 ```
 all_columns = dprep.ColumnSelector(term=".*", use_regex=True)
 drop_if_all_null = [all_columns, dprep.ColumnRelationship(dprep.ColumnRelationship.ALL)]
@@ -107,6 +128,10 @@ useful_columns = [
 ```
 
 ## create a tmp dataframe
+
+Replace NA, drop nulls and change columns name to be common between datasets. Combine both datasets to form one compelete one.
+
+New Cell:
 ```
 tmp_df = (green_df
     .replace_na(columns=all_columns)
@@ -130,10 +155,12 @@ tmp_df = (green_df
 tmp_df.head(5)
 ```
 
+New Cell:
 ```
 green_df = tmp_df
 ```
 
+New Cell:
 ```
 tmp_df = (yellow_df
     .replace_na(columns=all_columns)
@@ -163,12 +190,18 @@ tmp_df = (yellow_df
 tmp_df.head(5)
 ```
 
+New Cell:
 ```
 yellow_df = tmp_df
 combined_df = green_df.append_rows([yellow_df])
 ```
 
 ## Profile the dataset
+
+Requests the data profile which collects summary statistics on the full data produced by the Dataflow. A data profile can be very useful to understand the input data, identify anomalies and missing values, and verify that data preparation operations produced the desired result.
+https://docs.microsoft.com/en-us/python/api/azureml-dataprep/azureml.dataprep.dataflow?view=azure-ml-py
+
+
 ```
 decimal_type = dprep.TypeConverter(data_type=dprep.FieldType.DECIMAL)
 combined_df = combined_df.set_column_types(type_conversions={
@@ -206,24 +239,32 @@ tmp_df.keep_columns(columns=[
 ```
 
 ## combine the dataframes
+Reassign the tmp_df to combined_df
+
 ```
 combined_df = tmp_df
 ```
 
+Profile the combined df.
 ```
 combined_df.keep_columns(columns='store_forward').get_profile()
 ```
 
 ## Fill, replace the dataset with missing values
+Replace 0 with N for Store_forward columns. Also fill nulls as N.
+
 ```
 combined_df = combined_df.replace(columns="store_forward", find="0", replace_with="N").fill_nulls("store_forward", "N")
 ```
+
+Replace .00 with 0 for distance columns. Also fill nulls as 0.
 
 ```
 combined_df = combined_df.replace(columns="distance", find=".00", replace_with=0).fill_nulls("distance", 0)
 combined_df = combined_df.to_number(["distance"])
 ```
 
+Rename columns and combine and profile.
 ```
 tmp_df_renamed = (tmp_df
     .rename_columns(column_pairs={
@@ -245,11 +286,17 @@ combined_df.get_profile()
 tmp_df = tmp_df.drop_columns(columns=["pickup_datetime", "dropoff_datetime"])
 ```
 
+Performs a pull on the data and populates conversion_candidates with automatically inferred conversion candidates for each column.
+https://docs.microsoft.com/en-us/python/api/azureml-dataprep/azureml.dataprep.api.builders.columntypesbuilder?view=azure-ml-py
+
 ```
 type_infer = tmp_df.builders.set_column_types()
 type_infer.learn()
 type_infer
 ```
+
+Uses current state of this object to add 'set_column_types' step to the original Dataflow
+https://docs.microsoft.com/en-us/python/api/azureml-dataprep/azureml.dataprep.api.builders.columntypesbuilder?view=azure-ml-py
 
 ```
 tmp_df = type_infer.to_dataflow()
@@ -257,6 +304,9 @@ tmp_df.get_profile()
 ```
 
 ## filter columns
+
+Take only values greater than 0.
+
 ```
 tmp_df = tmp_df.filter(dprep.col("distance") > 0)
 tmp_df = tmp_df.filter(dprep.col("cost") > 0)
@@ -267,6 +317,13 @@ import azureml.dataprep as dprep
 ```
 
 # Build Automated Machine Learning code
+
+At this point the data is ready. Now we are going to configure the automated machine learning with specification or parameters. Submit then to automated machine learning to run.
+
+## import for Building automated Machine learning specification to submit.
+
+Load the necessary import for automated machine learning.
+
 ```
 import azureml.core
 import pandas as pd
@@ -275,6 +332,9 @@ import logging
 ```
 
 ## Load workspaces
+
+Load the workspace configuration to submit for modelling.
+
 ```
 ws = Workspace.from_config()
 # choose a name for the run history container in the workspace
@@ -297,12 +357,19 @@ outputDf.T
 ```
 
 ## Set columns
+
+- Set the columns for features
+- Set the label column
+
 ```
 dflow_X = dflow_prepared.keep_columns(['pickup_weekday','pickup_hour', 'distance','passengers', 'vendor'])
 dflow_y = dflow_prepared.keep_columns('cost')
 ```
 
 ## Split data set
+
+Split the data set for training and testing. Training is used for training the model. Test is used for validating. Split is 80% training and 20% testing. Values are selected randomly. Flatten the data frames to make it available for model.
+
 ```
 from sklearn.model_selection import train_test_split
 
@@ -316,6 +383,9 @@ y_train.values.flatten()
 ```
 
 ## Automated ML settings
+
+Configure the automated machine learning parameters or specification. Set the iteration, timeout, primary metric to calculate, logging info, and cross validation values.
+
 ```
 automl_settings = {
     "iteration_timeout_minutes" : 10,
@@ -328,6 +398,9 @@ automl_settings = {
 ```
 
 ## set the automl config to model run
+
+Set the above configuration to automated machine learning. Select the model as regression, provide the path, training values for fetures and label and also the above automated machine learning parameters/specficiation to run.
+
 ```
 from azureml.train.automl import AutoMLConfig
 
@@ -341,6 +414,9 @@ automated_ml_config = AutoMLConfig(task = 'regression',
 ```
 
 ## Run the model
+
+Submit the model to run. This step will take. Mine took close to 12 mins to run. i used cpu cluster with 4 nodes max.
+
 ```
 from azureml.core.experiment import Experiment
 experiment=Experiment(ws, experiment_name)
@@ -348,6 +424,9 @@ local_run = experiment.submit(automated_ml_config, show_output=True)
 ```
 
 ## Metrics calculation
+
+Calculate the metric from the iterations and average them.
+
 ```
 children = list(local_run.get_children())
 metricslist = {}
@@ -361,11 +440,16 @@ rundata
 ```
 
 ## Print best model
+
+Display the best model. Get the model's output metric to show the accuracy of the model.
+
 ```
 best_run, fitted_model = local_run.get_output()
 print(best_run)
 print(fitted_model)
 ```
+
+Register the model so we can use the id to deploy as web service to inference.
 
 ```
 description = 'Automated Machine Learning Model'
@@ -375,7 +459,12 @@ print(local_run.model_id) # Use this id to deploy the model as a web service in 
 ```
 
 ## Print the predicted output
+
+Display predicted output and validate the output to make sure if the model is performing well.
+
 ```
 y_predict = fitted_model.predict(x_test.values) 
 print(y_predict[:10])
 ```
+
+To make the model better work on feature engineering and try to re run the models and see which model performs well.
