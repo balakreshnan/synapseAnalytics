@@ -1,4 +1,4 @@
-# Synapse Analytics Using Python Azure Machine learning SDK.
+# Azure Synapse Analytics - Automated Machine learning using Azure Machine learning service.
 
 Unified Analytics Tool to ingest, compute or process data, Store data, Advanced analytics or machine learning and Display all in one tool. End to end data analytics platform built to scale and ease of use. 
 
