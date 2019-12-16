@@ -1,0 +1,4 @@
+C:\Users\babal\Documents\Work\synapseAnalytics\Code\IoTSimulator\IoTSimulator\bin\Debug\netcoreapp3.1\IoTSimulator.exe
+C:\Users\babal\Documents\Work\synapseAnalytics\Code\IoTSimulator\IoTSimulator\obj\Debug\netcoreapp3.1\IoTSimulator.csprojAssemblyReference.cache
+C:\Users\babal\Documents\Work\synapseAnalytics\Code\IoTSimulator\IoTSimulator\obj\Debug\netcoreapp3.1\IoTSimulator.AssemblyInfoInputs.cache
+C:\Users\babal\Documents\Work\synapseAnalytics\Code\IoTSimulator\IoTSimulator\obj\Debug\netcoreapp3.1\IoTSimulator.AssemblyInfo.cs
