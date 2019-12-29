@@ -93,7 +93,7 @@ DeltaTable.forPath(spark, "/delta/taxidata/").as("org").merge(historical_events1
 df_delta.count()
 ```
 
-## alertanate merge using append
+## Alternate merge using append
 
 ```
 historical_events1.write.format("delta").mode("append").partitionBy("Date").save("/delta/taxidata/")
