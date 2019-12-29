@@ -1,4 +1,4 @@
-# Azure synapse analytics spark processing delta
+# Azure synapse analytics spark processing delta lake
 
 ![alt text](https://github.com/balakreshnan/synapseAnalytics/blob/master/images/synapseprocess.JPG "Synapse Analytics")
 
