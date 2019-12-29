@@ -98,3 +98,5 @@ df_delta.count()
 ```
 historical_events1.write.format("delta").mode("append").partitionBy("Date").save("/delta/taxidata/")
 ```
+
+Have fun
