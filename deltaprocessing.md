@@ -1,4 +1,4 @@
-# Azure synapse analytics spark processing delta lake
+# Azure Synapse Analytics Spark processing using delta lake
 
 Implement Delta Lake in Azure Synapse Analytics Spark.
 
@@ -51,8 +51,7 @@ display(df_delta)
 ## spark sql syntax for delta lake loading and truncating
 
 ```
-display(spark.sql("DROP TABLE IF EXISTS taxidata"))
-        
+display(spark.sql("DROP TABLE IF EXISTS taxidata"))        
 display(spark.sql("CREATE TABLE taxidata USING DELTA LOCATION '/delta/taxidata/'"))
 ```
 
