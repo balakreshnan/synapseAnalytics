@@ -51,8 +51,7 @@ display(df_delta)
 ## spark sql syntax for delta lake loading and truncating
 
 ```
-display(spark.sql("DROP TABLE IF EXISTS taxidata"))
-        
+display(spark.sql("DROP TABLE IF EXISTS taxidata"))        
 display(spark.sql("CREATE TABLE taxidata USING DELTA LOCATION '/delta/taxidata/'"))
 ```
 
