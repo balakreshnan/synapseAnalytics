@@ -75,3 +75,27 @@ val historical_events = spark.read.option("header","true").option("inferSchema",
 val historical_events1 = df.withColumn("Date", (col("pickup_datetime").cast("date")))
 ```
 
+## invoke Delta lake merge
+
+```
+import io.delta.tables._
+import org.apache.spark.sql.functions._
+```
+
+```
+DeltaTable.forPath(spark, "/delta/taxidata/").as("org").merge(historical_events1.as("updates"),"org.key = updates.key and org.pickup_datetime = updates.pickup_datetime and org.pickup_longitude = updates.pickup_longitude and org.pickup_latitude = updates.pickup_latitude and org.dropoff_longitude = updates.dropoff_longitude and org.dropoff_latitude = updates.dropoff_latitude").whenNotMatched().insertAll().execute()
+```
+
+## Validate the merge
+
+```
+df_delta.count()
+```
+
+## Alternate merge using append
+
+```
+historical_events1.write.format("delta").mode("append").partitionBy("Date").save("/delta/taxidata/")
+```
+
+Have fun
