@@ -1,4 +1,4 @@
-# Azure Spark ETL in Azure Synapse Analtyics (Workspace) with sample datasets
+# Azure Spark ETL in Azure Synapse Analtyics (Workspace) with sample datasets and machine learning
 
 ## Use existing data sets to load and process data to learn ETL - Extract, Transform and Load
 
@@ -119,6 +119,8 @@ order by  tsYear,tsDay, tsHour
 - Let's create a Regression model to predict hourly what would be the Total Avg for forecasting
 
 ![alt text](https://github.com/balakreshnan/synapseAnalytics/blob/master/images/etl9.jpg "ETL")
+
+## Machine learning (regression)
 
 - Create a new Table called dailyaggr and save the aggregated data
 
