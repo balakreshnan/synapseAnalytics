@@ -29,11 +29,15 @@ data_df = data.to_spark_dataframe()
 display(data_df.limit(10))
 ```
 
+![alt text](https://github.com/balakreshnan/synapseAnalytics/blob/master/images/etl0.jpg "ETL")
+
 - Display the data
 
 ```
 display(data_df)
 ```
+
+![alt text](https://github.com/balakreshnan/synapseAnalytics/blob/master/images/etl1.jpg "ETL")
 
 - Bring the imports
 
@@ -49,6 +53,8 @@ df1 = data_df.withColumn("Date", (col("tpepPickupDateTime").cast("date")))
 display(df1)
 ```
 
+![alt text](https://github.com/balakreshnan/synapseAnalytics/blob/master/images/etl2.jpg "ETL")
+
 - Drop duplicates if necessary
 
 ```
@@ -61,11 +67,16 @@ df1.dropDuplicates("key","pickup_datetime","pickup_longitude","pickup_latitude",
 df1.printSchema
 ```
 
+![alt text](https://github.com/balakreshnan/synapseAnalytics/blob/master/images/etl3.jpg "ETL")
+
 - Create year, month and day columns to make it easier for data set to do aggregation
 
 ```
 df2 = df1.withColumn("year", year(col("date"))) .withColumn("month", month(col("date"))) .withColumn("day", dayofmonth(col("date"))) .withColumn("hour", hour(col("date")))
+display(df2)
 ```
+
+![alt text](https://github.com/balakreshnan/synapseAnalytics/blob/master/images/etl4.jpg "ETL")
 
 - Now lets do aggregation using group by
 
@@ -79,6 +90,12 @@ df2.groupBy("year","month").agg(sum("fareAmount").alias("Total"),count("vendorID
 dfgrouped = df2.groupBy("year","month").agg(sum("fareAmount").alias("Total"),count("vendorID").alias("Count")).sort(asc("year"), asc("month"))
 display(dfgrouped)
 ```
+
+![alt text](https://github.com/balakreshnan/synapseAnalytics/blob/master/images/etl5.jpg "ETL")
+
+![alt text](https://github.com/balakreshnan/synapseAnalytics/blob/master/images/etl6.jpg "ETL")
+
+![alt text](https://github.com/balakreshnan/synapseAnalytics/blob/master/images/etl7.jpg "ETL")
 
 - now lets see if we can do the same aggregation using spark sql
 
