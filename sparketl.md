@@ -251,4 +251,76 @@ println("Root Mean Square Error = " + evaluator_rmse.evaluate(lrPredictions))
 
 ![alt text](https://github.com/balakreshnan/synapseAnalytics/blob/master/images/etl15.jpg "ETL")
 
+## Writing data back Azure synapse analytics.
+
+![alt text](https://github.com/balakreshnan/synapseAnalytics/blob/master/images/etl16.jpg "ETL")
+
+- Imports
+
+```
+%%spark
+import com.microsoft.spark.sqlanalytics.utils.Constants
+import org.apache.spark.sql.SqlAnalyticsConnector._
+```
+
+- Write to Azure Synapse Analytics (SQL DW)
+- No need to create table.
+
+```
+%%spark
+dailyaggr.repartition(2).write.sqlanalytics("accsynapsepools.wwi.dailyaggr", Constants.INTERNAL)
+```
+
+- For Schema to check it.
+
+```
+DROP TABLE [wwi].[dailyaggr]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [wwi].[dailyaggr]
+( 
+	[tsYear] [int]  NULL,
+	[tsMonth] [int]  NULL,
+	[tsDay] [int]  NULL,
+	[tsHour] [int]  NULL,
+	[avgTotal] [float]  NULL
+)
+WITH
+(
+	DISTRIBUTION = ROUND_ROBIN,
+	CLUSTERED COLUMNSTORE INDEX
+)
+GO
+```
+
+- Validate the data in Azure synapse analytics (Formerly SQL DW)
+
+![alt text](https://github.com/balakreshnan/synapseAnalytics/blob/master/images/etl17.jpg "ETL")
+
+- Read the data and validate
+
+```
+%%spark
+val dailyaggrdf = spark.read.sqlanalytics("accsynapsepools.wwi.dailyaggr")
+```
+
+- Display data
+
+```
+%%spark
+display(dailyaggrdf)
+```
+
+- Count the records
+
+```
+%%spark
+dailyaggrdf.count()
+```
+
 More to come.
