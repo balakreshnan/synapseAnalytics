@@ -6,6 +6,18 @@
 
 Ability to process data using sample data sets to learn Extract, Transform and Load in scale using Azure synapse analytics workspace spark. 
 
+i was able to use pyspark to do ETL, then Spark SQL for aggregation and then use scala for modelling all in one notebook.
+
+This tutorial only shows how to do model training for regression modelling using spark.
+
+- Forecast hourly average total fare amount using yellow taxi open source data set.
+
+- Forecast hourly avgTotal = average Total Fare amount using regression.
+
+```
+note: the data set and use case are just imaginary.
+```
+
 - Using Pyspark
 
 ## Pre-requsitie
@@ -15,6 +27,7 @@ Ability to process data using sample data sets to learn Extract, Transform and L
 - Create spark spools
 - I am using medium instance
 - No libraries are uploaded
+- Spark version: 2.4.4
 
 ## Steps to ETL
 
