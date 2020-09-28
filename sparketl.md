@@ -105,12 +105,13 @@ df2.createOrReplaceTempView("nycyellow")
 
 ```
 %%sql
-select  day(cast(ts  as tpepPickupDateTime)) as tsDay, 
-        hour(cast(ts  as tpepPickupDateTime)) as tsHour,
+select  year(cast(tpepPickupDateTime  as timestamp)) as tsYear,
+        day(cast(tpepPickupDateTime  as timestamp)) as tsDay, 
+        hour(cast(tpepPickupDateTime  as timestamp)) as tsHour,
         avg(totalAmount) as avgTotal, avg(fareAmount) as avgFare
 from nycyellow
-group by  tsDay, tsHour
-order by  tsDay, tsHour
+group by  tsYear,tsDay, tsHour
+order by  tsYear,tsDay, tsHour
 ```
 
 More to come.
