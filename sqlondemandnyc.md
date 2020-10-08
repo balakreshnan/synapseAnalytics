@@ -139,3 +139,5 @@ FROM
 ```
 
 ![alt text](https://github.com/balakreshnan/synapseAnalytics/blob/master/images/sqlondeman5.jpg "ETL")
+
+more to come
