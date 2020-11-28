@@ -26,3 +26,9 @@
 - Once you commit any changes, here is how the github repo looks like
 
 ![alt text](https://github.com/balakreshnan/synapseAnalytics/blob/master/images/cicd3.jpg "Synapse Analytics")
+
+- for integration pipeline in development everything will be commited to wip branch
+- will not have publish
+- so after commit do a pull request and merge to main
+- then switch to main branch
+- now will create publish_branch for all data factory activity to push.
