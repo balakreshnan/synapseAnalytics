@@ -21,7 +21,7 @@ Not every use case you have to resume and pause dedicated sql pools. If needed u
 
 ## End to End Processing Architecture
 
-![alt text](https://github.com/balakreshnan/synapseAnalytics/blob/master/images/e2etest1.jpg "Synapse Analytics")
+![alt text](https://github.com/balakreshnan/synapseAnalytics/blob/master/images/e2etest2.jpg "Synapse Analytics")
 
 ## Prerequisite
 
@@ -243,7 +243,7 @@ display(dailyaggr)
 - as you see synapsesql is inbuilt in the synapse workspace for native integration
 
 ```
-dailyaggr.write.synapsesql("accsynapsepools.wwi.dailyaggr", Constants.INTERNAL)
+#dailyaggr.write.synapsesql("accsynapsepools.wwi.dailyaggr", Constants.INTERNAL)
 ```
 
 ### Time to build machine learning Model
@@ -272,6 +272,11 @@ val assembledFinalDF = assembledDF.select("avgTotal","features")
 %%spark
 import com.microsoft.spark.sqlanalytics.utils.Constants
 import org.apache.spark.sql.SqlAnalyticsConnector._
+```
+
+```
+%%spark
+dailyaggr.repartition(2).write.synapsesql("accsynapsepools.wwi.dailyaggr", Constants.INTERNAL)
 ```
 
 ```
@@ -354,7 +359,7 @@ println("Root Mean Square Error = " + evaluator_rmse.evaluate(lrPredictions))
 - Now that we have the resume, pause integration pipline and also the ETL and ML modeling code ready.
 - Let's create the integration pipeline to combine all of them like below.
 
-![alt text](https://github.com/balakreshnan/synapseAnalytics/blob/master/images/e2etest1.jpg "Synapse Analytics")
+![alt text](https://github.com/balakreshnan/synapseAnalytics/blob/master/images/e2etest2.jpg "Synapse Analytics")
 
 - Create a new integration
 - First select execute pipeline and select Resume dedicated SQL pools pipeline
