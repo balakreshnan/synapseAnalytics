@@ -230,10 +230,10 @@ display(dailyaggr)
 ```
 
 - Write to dedicated SQL Pools
-- as you see sqlanalytics is inbuilt in the synapse workspace for native integration
+- as you see synapsesql is inbuilt in the synapse workspace for native integration
 
 ```
-dailyaggr.write.sqlanalytics("accsynapsepools.wwi.dailyaggr", Constants.INTERNAL)
+dailyaggr.write.synapsesql("accsynapsepools.wwi.dailyaggr", Constants.INTERNAL)
 ```
 
 ### Time to build machine learning Model
