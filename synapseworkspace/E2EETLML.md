@@ -85,6 +85,16 @@ https://management.azure.com/subscriptions/subid/resourceGroups/rggroupname/prov
 https://management.azure.com/
 ```
 
+## Create stored procedure to delete the table in sql pools
+
+```
+CREATE PROCEDURE dropdailyaggr
+AS
+Drop Table [wwi].[dailyaggr]
+GO
+exec dropdailyaggr
+```
+
 ## Code to create ETL and ML Code using Notebook
 
 - Let's load the data set
