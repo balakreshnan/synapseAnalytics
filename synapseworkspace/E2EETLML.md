@@ -119,13 +119,13 @@ df1.createOrReplaceTempView("nycyellow")
 - find the total count of records
 
 ```
-df1.count()
+#df1.count()
 ```
 
 - Drop duplicates
 
 ```
-df1.dropDuplicates("key","pickup_datetime","pickup_longitude","pickup_latitude","dropoff_longitude","dropoff_latitude")
+#df1.dropDuplicates("key","pickup_datetime","pickup_longitude","pickup_latitude","dropoff_longitude","dropoff_latitude")
 ```
 
 - Print schema
