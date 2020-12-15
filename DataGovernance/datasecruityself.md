@@ -4,14 +4,14 @@
 
 Data security for self service Business intelligence is an area which has lots of attention these days. There is primarly 2 parts to it one is writing to self service storage and other is reading from it. Writes are usually controlled but reads are the most challenging. This is a topic i hear and talk about it every day.
 
-For Read there are considerstation like
+For Read there are consideration like
 
 - Number of users accessing the system
 - Performance of the system
 - How secured the data is?
 - Who can access what data.
 
-let's first start with what is self service. Over the years of using data and building reports to run business using data to take decision, it has been done with various technologies. But the challenge has been, data is duplicated in some fashion and stored in systems specific to certain use cases to take decision. This causes lots of delay and time consuming development to get the data so that we can take data focussed decision making.
+let's first start with what is self service. Over the years of using data and building reports to run business using data to take decision, it has been done with various technologies. But the challenge has been, data is duplicated in some fashion and stored in systems specific to certain use cases to take decision. This causes lots of delay and time consuming development to get the data so that we can take data focused decision making.
 
 Another challenge is data stored for accessing when the volume increases it becomes hard to provide security as each row can have multiple security rules or policies. For example when there in few rows it is easy to provide security with performance, now if the same data sets has few billions rows then performance become challenging.
 
@@ -21,7 +21,7 @@ Another challenge is data stored for accessing when the volume increases it beco
 
 ## why Databases other than files?
 
-This is a topic which is kinda important. Files accessing with few rows are easy and nothing is challenging but when the file sizes grows in gigabytes or terabytes and more it becomes hard and time consuming to access. To provide a solution data bases are their technologies are alternate. Not only that conncurrency and multiple user access are well suited in database. Also data bases and related technologies provide storage not for just one application but may be one or more, sharing model.
+This is a topic which is kinda important. Files accessing with few rows are easy and nothing is challenging but when the file sizes grows in gigabytes or terabytes and more it becomes hard and time consuming to access. To provide a solution data bases are their technologies are alternate. Not only that concurrency and multiple user access are well suited in database. Also data bases and related technologies provide storage not for just one application but may be one or more, sharing model.
 
 ## Self service Security
 
