@@ -15,6 +15,10 @@ let's first start with what is self service. Over the years of using data and bu
 
 Another challenge is data stored for accessing when the volume increases it becomes hard to provide security as each row can have multiple security rules or policies. For example when there in few rows it is easy to provide security with performance, now if the same data sets has few billions rows then performance become challenging.
 
+## Architecture
+
+![alt text](https://github.com/balakreshnan/synapseAnalytics/blob/master/images/datasec.jpg "Data Security - Self Service BI")
+
 ## why Databases other than files?
 
 This is a topic which is kinda important. Files accessing with few rows are easy and nothing is challenging but when the file sizes grows in gigabytes or terabytes and more it becomes hard and time consuming to access. To provide a solution data bases are their technologies are alternate. Not only that conncurrency and multiple user access are well suited in database. Also data bases and related technologies provide storage not for just one application but may be one or more, sharing model.
