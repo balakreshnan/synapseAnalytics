@@ -1,4 +1,4 @@
-# synapseAnalytics
+# Azure Synapse Analytics - How To's and Samples
 
 ## Get started with Synapse Analytics
 First create Azure SQL Pool and Spark cluster.
@@ -6,6 +6,10 @@ First create Azure SQL Pool and Spark cluster.
 Azure SQL DW Pool is used for running SQL queries. Query tool uses Azure SQL DW pools to execute queries.
 
 Spark cluster is used for Notebooks. Notebooks can run Pyspark, Scala or Spark SQL. Also C# is also available.
+
+## Code Repository
+
+https://github.com/balakreshnan/gitsynapse
 
 ## SQl Scripts
 Create a new sql scripts and run DML and DDL on the query. Select the data base as dwpool (database name created by SQL DW pool).
